@@ -1,0 +1,27 @@
+<script>
+// input basicSalary of an employee
+// if basicSalary > 10000
+// hra = 10%, ta = 5%, da = 3%
+// otherwise hra = 5% , ta = 3%
+// calculate gross salary
+/*
+   DRY (Donot Repeat YourSelf)
+   KISS (Keep it simple & short)
+*/
+// 0, false, undefined, null, ""/''
+  var basicSalary = parseInt(prompt('Enter A Basic Salary of empl.'))
+  var hra,ta,da,gs;
+  if(basicSalary > 10000){
+    hra = (basicSalary*10)/100;
+    ta = (basicSalary*5)/100;
+    da = (basicSalary*3)/100;
+  }
+  else{
+    hra = (basicSalary*5)/100;
+    ta = (basicSalary*3)/100;
+    da = 0;
+  }
+  var gs = basicSalary + hra + ta + da;
+  document.write("Gross salary : "+gs);
+  
+</script>    
