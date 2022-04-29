@@ -1,0 +1,14 @@
+<script>
+    function addition(a,b,callback){
+       var result = a + b;
+       document.write("<br>Addition : "+result);
+       callback(result);
+    }
+    
+    addition(20,10,n=>{
+      if(n%2)
+        document.write("<br>Odd..");
+      else
+        document.write("<br>Even..");  
+    });
+</script>

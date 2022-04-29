@@ -1,0 +1,14 @@
+<script>
+// [] --> jsonArray
+// {}--->JsonObject
+//mongodb(BJSON) ----> [{},{},{}]
+// request --> {username: '',email:'',password: ''}
+// API -- in response you will get JSON
+var customer = {id:100, cname:'Rahil'};
+document.write(customer.id+" "+customer.cname+"<br>");
+customer.age = 20;
+document.write(customer.id+" "+customer.cname+" "+customer.age+"<br>");
+var user ={id:100, username:'Cheeku',mobile: '9009111222'};
+delete user.id
+document.write(user.id);
+</script>

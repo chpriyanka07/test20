@@ -1,0 +1,15 @@
+<script>
+   function operation(n,successResponse,errorResponse){
+       if(n == 200)
+         successResponse("Success Response..");
+       else if(n == 500)
+              errorResponse("Error Response..");
+          
+   }
+   
+   operation(500,function(successMessage){
+      document.write(successMessage);
+   },function(errorMessage){
+      document.write(errorMessage);
+   });
+</script>

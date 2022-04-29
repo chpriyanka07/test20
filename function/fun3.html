@@ -1,0 +1,13 @@
+<script>
+  function f1(a,b,c){
+    // a = 20
+    // b = 10
+    // c = function(){}
+    document.write("<br>a : "+a);
+    document.write("<br>b : "+b);
+    c();  
+  }
+  f1(20,10,function(){
+    document.write("<br>Callback called......");
+  });
+</script>

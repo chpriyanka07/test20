@@ -1,0 +1,17 @@
+<script>
+  
+  function addition(a,b,callback){
+    if(a < 0 || b < 0 )
+     callback('Error : Negative integer...');
+    else
+     callback(null,a+b); 
+  }
+  
+  addition(20,-10,function(err,result){
+     if(err)
+       document.write(err);
+     else
+       document.write("Addition : "+result);  
+  });
+  
+</script>

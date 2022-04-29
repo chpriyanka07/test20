@@ -1,0 +1,25 @@
+<script>
+
+   var customer = {
+     id: 100,
+     cname : 'Rahil',
+     bal : 50000,
+     deposite: function(amount){
+        //bal  = bal + amount;
+       this.bal += amount;
+       document.write("<br>Total Balance : "+this.bal);
+     },
+     balanceEnquiry : function(){
+       document.write("<br>Your Balance : "+this.bal);
+     },
+     viewDetail : function(){
+       document.write("<br>Id : "+this.id);
+       document.write("<br>Name : "+this.cname);
+       document.write("<br>Bal: "+this.bal);
+     }
+   };
+   document.write(customer.id+" "+customer.cname+" "+customer.bal+"<br>"); 
+   customer.deposite(4000);
+   customer.balanceEnquiry();
+   customer.viewDetail();
+</script>

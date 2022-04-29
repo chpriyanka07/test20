@@ -1,0 +1,13 @@
+<script>
+   function operation(a,b,callback){
+     var result;
+     result = a + b;
+     document.write("<br>Addition : "+result);
+     callback(result);
+   }
+   
+   
+   operation(20,11,function(n){
+     n%2 ? document.write("<br>Odd") : document.write("<br>Even");
+   });
+</script>
