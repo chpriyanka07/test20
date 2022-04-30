@@ -1,0 +1,17 @@
+<script>
+  function Customer(id,cname,bal){
+     this.id = id;
+     this.cname = cname;
+     this.bal = bal;
+     
+     this.balEnquiry = function(){
+       document.write("<br> Balance : "+this.bal);
+     }
+     
+  }
+  
+  var obj1 = new Customer(100,"Rahil",20000);
+  var obj2 = new Customer(200,"Sahil",10000);
+  obj1.balEnquiry();
+  obj2.balEnquiry();
+</script>
