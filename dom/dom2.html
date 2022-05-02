@@ -1,0 +1,23 @@
+<html>
+  <body>
+     <center>
+        <img src="monster1.png" width="100px" height="100px" id="main"/>
+        <br>
+        <button onclick="zoomInImage()">+</button>
+        <button onclick="zoomOutImage()">-</button>
+     </center>
+     <script>
+        function zoomInImage(){
+          var obj = document.getElementById("main");
+          obj.width = obj.width + 10;
+          obj.height = obj.height + 10;
+        }
+        function zoomOutImage(){
+          var obj = document.getElementById("main");
+          obj.width = obj.width - 10;
+          obj.height = obj.height - 10;
+        }
+     </script>
+  </body>
+</html>
+

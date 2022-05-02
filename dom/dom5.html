@@ -1,0 +1,30 @@
+<html>
+ <head>
+   <style>
+      input{
+        width:100%;
+        height: 20px; 
+      }
+      div{
+        background-color : black;
+        color: white;
+        height: 100px;
+      }
+   </style>
+ </head>
+  <body>
+      <input id="textInput" onkeyup="getData()" type="text" placeholder="Enter Text"/>
+      <br><br>
+      <div id="result"></div>
+      <script>
+         function getData(){
+           var input = document.getElementById("textInput").value;
+           //var data = input.value;
+           var divObject = document.getElementById("result");
+           divObject.innerHTML = ""+input;   
+         }
+         
+         
+      </script>
+  </body>
+</html>

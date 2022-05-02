@@ -1,0 +1,24 @@
+<html>
+  <body>
+     <center>
+        <img src="monster1.png" width="100px" height="100px" id="main"/>
+        <br>
+        <button onclick="changeImage(1)">+</button>
+        <button onclick="changeImage(2)">-</button>
+     </center>
+     <script>
+       function changeImage(n){
+         var obj = document.getElementById("main");
+         if(n == 1){
+           obj.width += 10;
+           obj.height += 10;
+         }
+         else if(n == 2){
+           obj.width -= 10;
+           obj.height -= 10;
+         }
+       }
+     </script>
+  </body>
+</html>
+

@@ -1,0 +1,23 @@
+<html>
+  <body>
+     <center>
+        <img src="monster1.png" width="400px" height="400px" id="main"/>
+        <br><br><br><br>
+        
+        <img onclick="changeImage(this)" src="monster8.png" width="100px" height="100px" id="first"/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        
+        <img onclick="changeImage(this)" src="flower01.jpeg" width="100px" height="100px" id="second"/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        
+        <img onclick="changeImage(this)" src="flower02.jpeg" width="100px" height="100px" id="third"/>
+     </center>
+     <script>
+         function changeImage(currentImage){
+           var mainImage = document.getElementById("main");
+           var temp = mainImage.src; // monster1.png
+           mainImage.src = currentImage.src; // monster8.png
+           currentImage.src = temp;
+         }
+     </script>
+  </body>
+</html>
+
