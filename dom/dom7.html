@@ -1,0 +1,31 @@
+<html>
+  <body>
+     <input onkeyup="operation()" type="text" id="first"/><br>
+     <input onkeyup="operation()" type="text" id="second"/><br>
+     <input onkeyup="operation()" type="text" id="third"/><br>
+     
+     <p id="result">Result : </p>
+     <script>
+        function operation(val){
+          var firstValue = document.getElementById("first").value;
+          var secondValue = document.getElementById("second").value;
+          var thirdValue = document.getElementById("third").value;
+          var pObject = document.getElementById("result");
+          if(firstValue == '')
+            firstValue = 0;
+          if(secondValue == '')
+            secondValue = 0;
+          if(thirdValue == '')
+            thirdValue = 0;
+          
+          var result = parseInt(firstValue) + parseInt(secondValue) + parseInt(thirdValue);      
+          
+          pObject.innerHTML = "Result : "+result;
+          
+          console.log("First Value : "+firstValue);
+          console.log("Second Value : "+secondValue);
+          console.log("Third Value : "+thirdValue);
+        }
+     </script>
+  </body>
+</html>

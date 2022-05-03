@@ -1,0 +1,34 @@
+<html>
+  <body>
+     <center>
+        <img id="main" src="monster1.png" width="100%" height="200px"/>
+        <br><br>
+        <span id="imageName"></span>
+        <br>
+        <button onclick="slideImage(1)"> < </button>
+        <button onclick="slideImage(2)"> > </button>
+     </center>
+     <script>
+        var imageList = ["monster1.png","monster2.png","monster3.png","monster4.png","monster5.png","monster6.png"];
+        var index=0;
+        function slideImage(n){
+          var imageObject = document.getElementById("main");
+           var spanObject = document.getElementById("imageName");
+          if(n == 1){
+             index--;
+             if(index<0)
+              index = 5;
+            
+          }
+          else if(n==2){
+             index++;
+             if(index>5)
+               index = 0;
+            
+          }
+           imageObject.src = imageList[index];
+           spanObject.innerHTML = imageObject.src;
+        }
+     </script>
+  </body>
+</html>
