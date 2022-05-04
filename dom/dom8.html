@@ -18,7 +18,32 @@
             </div>
             <div class="form-group">
               <label>Mobile</label>
-              <input type="text" id="mobile" class="form-control"/>
+              <input onkeyup="validateMobile()" type="text" id="mobile" class="form-control"/>
+              <small id="mobileError"></small>
+            </div>
+            <div class="form-group">
+              <label>Experience</label>
+              <select onchange="validateExperience()" id="experience" class="form-control">
+                 <option value="0">select experience</option>
+                 <option value="Fresher">Fresher</option>
+                 <option value="0-2">0-2 year</option>
+                 <option value="2-5">2-5 year</option>
+                 <option value="5+">Above 5 year</option>
+              </select>
+              <small id="experienceError"></small>
+            </div>
+            <div class="form-group">
+              <label>Gender</label><br>
+              Male <input onchange="validateGender()" type='radio' id="maleGender" name="gender"/>
+              Female <input onchange="validateGender()" type='radio' id="femaleGender" name="gender"/>
+               <br>
+               <small id="genderError"></small>
+            </div>
+            <div class="form-group">
+              <label>Upload Profile Pic</label><br>
+              <input onchange="validateProfilePic()" type="file" id="profilePic"/>
+              <br>
+              <small id="profilePicError"></small>
             </div>
             <div class="form-group">
               <button onclick="return validationData()" type="submit" class="btn btn-primary">Register</button>
@@ -26,6 +51,76 @@
          </div>
       </form>
       <script>
+        function validateProfilePic(){
+          var status = true;
+          var file = document.getElementById("profilePic");
+          var fileError = document.getElementById("profilePicError");
+          var filePath = file.value;
+          var index = filePath.lastIndexOf(".");
+          var fileExtension = filePath.substring(index+1);
+          if(fileExtension != "png"){
+             status = false;
+             fileError.innerHTML = "Only png is allowed";
+             fileError.style.color = 'red';
+          }
+          else
+           fileError.innerHTML = "";
+          return status; 
+        }
+        function validateGender(){
+          var status = true;
+          var male = document.getElementById("maleGender").checked;
+          var female = document.getElementById("femaleGender").checked;
+          var genderError = document.getElementById("genderError");
+          if(male == false && female == false){
+            status = false;
+            genderError.innerHTML = "please select gender";
+            genderError.style.color = 'red';
+          }
+          else
+           genderError.innerHTML = "";
+          
+          return status;
+        }
+        function validateExperience(){
+          var status = true;
+          var exp = document.getElementById("experience").value;
+          console.log(exp);
+          var expError = document.getElementById("experienceError");
+          if(exp == 0){
+            status = false;
+            expError.innerHTML = "select experience";
+            expError.style.color='red';
+          }
+          else
+           expError.innerHTML = "";
+          return status;
+        }
+        function validateMobile(){
+           var status = true;
+           var mobile = document.getElementById("mobile").value;
+           mobile = mobile.trim();
+           var mobileError = document.getElementById("mobileError");
+           if(mobile.length == 0){
+              status = false;
+              mobileError.innerHTML = "mobile number is required";
+              mobileError.style.color = 'red';  
+           }
+           else if(mobile.length !=10){
+              status = false;
+              mobileError.innerHTML = "Mobile must contain 10 digit";
+              mobileError.style.color = 'red'; 
+           }
+           else if(isNaN(mobile)){
+             status = false;
+             mobileError.innerHTML = "Only digit allowed";
+             mobileError.style.color = 'red';
+           }
+           else
+            mobileError.innerHTML = "";
+           
+            return status; 
+        }
          function showPassword(){
             var passwordObject = document.getElementById("password");
             var showHideObject = document.getElementById("showhide");
@@ -41,6 +136,7 @@
          function validateUsername(){
             var status = true;
             var username = document.getElementById("username").value;
+            username = username.trim();
             var usernameError = document.getElementById("usernameError");
             if(username.length == 0){
              usernameError.innerHTML = "please enter username";
@@ -57,7 +153,7 @@
             var passwordError = document.getElementById("passwordError");
             if(password.length == 0){
              status = false;
-             passwordError.innerHTML = "please enter password";
+             passwordError.innerHTML = 'please enter password';
              passwordError.style.color = 'red';
            }  
            else if(password.length < 6 || password.length > 10){
@@ -75,8 +171,11 @@
             
             var usernameStatus = validateUsername();
             var passwordStatus = validatePassword();
-         
-            if(usernameStatus == true && passwordStatus == true)
+            var mobileStatus = validateMobile();
+            var expStatus  = validateExperience();
+            var genderStatus = validateGender();
+            var fileStatus = validateProfilePic();
+            if(fileStatus && usernameStatus && passwordStatus  && mobileStatus && expStatus && genderStatus)
               return true;
             return false;     
          }
