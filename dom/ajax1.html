@@ -1,0 +1,34 @@
+<script>
+    var xhttp = new XMLHttpRequest();
+    var apiUrl = "https://jsonplaceholder.typicode.com/comments";
+    xhttp.open("GET",apiUrl,true);
+    xhttp.send();
+    
+    // Code For Processing Response
+    xhttp.onreadystatechange = function(){
+        console.log(xhttp.readyState);
+        if(xhttp.readyState == 4){
+            var data = xhttp.responseText;
+            // data = "[{},{},{}]"
+            data = JSON.parse(data);
+            document.write("<table width='100%' border='1'>");
+            document.write("<tr>")
+            document.write("<td>PostId</td>");
+            document.write("<td>Id</td>");
+            document.write("<td>Name</td>");
+            document.write("<td>Email</td>");
+            document.write("</tr>");
+            for(i=0; i<data.length; i++){
+                var obj = data[i];
+                document.write("<tr>")
+                document.write("<td>"+obj.postId+"</td>");
+                document.write("<td>"+obj.id+"</td>");
+                document.write("<td>"+obj.name+"</td>");
+                document.write("<td>"+obj.email+"</td>");
+                document.write("</tr>");
+            
+            }
+            document.write("</table>");
+        }
+    }
+</script>
