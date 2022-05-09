@@ -1,4 +1,5 @@
-//var x = [10,20,30,40,50];
+var x = [10,20,30,40,50];
+console.log(x);
 /*
 for(let index in x){
    console.log(x[index]);   
