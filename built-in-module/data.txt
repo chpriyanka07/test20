@@ -1,0 +1,4 @@
+Welcome in Node Application
+Node is single threaded
+Node handle multiple request with the help of event loop model
+Node application is highly scalable and superfast.
