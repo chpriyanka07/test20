@@ -211,8 +211,33 @@
 ------------------------------------------------------------------------
  update user set city_id=1 where id in(1,2,3);
 
+-----------------------------------------------------------------
+Joins :-  To fetch the data from multiple tables;
+   1. Inner Join   :- Get matching record from both the tables
+   2. Left outer Join :- Get all data of left table + matching record of another table
+   3. Right outer join :- Get all data of right table + matching record of another table
+   4. Self Join :- Applicable on same table used to compare records of same table.
+   5. Cross Join / Cartision product :- Get all possible combinition of records of both the tables.
 
+  select user.id, user.name,user.age, city.city_name
+  from user inner join city on user.city_id = city.id
+  where user.age >=25
+   
+   select user.id,user.name,user.age,city.city_name,
+   state.state_name 
+   from user inner join city on user.city_id= city.id
+   inner join state on city.state_id = state.id
+   
+   select user.id,user.name,city.city_name,state.state_name,
+   country.country_name
+   from user inner join city on user.city_id = city.id
+   inner join state on state.id = city.state_id
+   inner join country on state.country_id = country.id
+   
+    select user.id,user.name,city.city_name,state.state_name,
+ country.country_name    from user inner join city on user.city_id
+= city.id    inner join state on state.id = city.state_id    inner
+join country on state.country_id = country.id where user.age>=25 order by city.city_name;
 
-
-
+   
    
