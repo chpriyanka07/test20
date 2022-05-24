@@ -238,6 +238,34 @@ Joins :-  To fetch the data from multiple tables;
  country.country_name    from user inner join city on user.city_id
 = city.id    inner join state on state.id = city.state_id    inner
 join country on state.country_id = country.id where user.age>=25 order by city.city_name;
+------------------------------------------------------------------------------
+select user.id,user.name,user.age,city.city_name
+from user left outer join city on user.city_id = city.id
+
+select user.id,user.name,user.age,city.city_name
+from city left outer join user on user.city_id = city.id
+
+select user.id,user.name,user.age,city.city_name
+from user right outer join city on user.city_id = city.id
+
+select id,name,age from user;
+
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City
+ORDER BY A.City;
+
+
+user :-  A,B
+select A.name as Name1,B.name as Name2 from user as A,
+user as B .
+ --------------------------------------------------------------------------------- 
+select count(*),city_id from user group by city_id
+
+select count(*) as Total,city.city_name from user
+inner join city on user.city_id = city.id
+group by city.city_name
 
    
    
