@@ -1,23 +1,15 @@
 const pool = require('../database/dbconfig');
+const Admin =  require('../model/admin.model');
 exports.signin = (request,response,next)=>{
     let email = request.body.email;
     let password = request.body.password;
-    pool.getConnection((err,con)=>{
-      if(!err){
-         let sql = "select * from admin where email='"+email+"' and password='"+password+"'";
-         con.query(sql,(err,result)=>{
-            con.release();
-            if(!err){
-              if(result.length!=0)
-                return response.render('admin_dashboard.ejs');
-            }
-            else {
-              console.log(err);
-            }
-         });
-      }
-      else
-        console.log(err);
+    // encapsulate this data into the admin model object
+    let admin = new Admin(null,email,password);
+    admin.authenticateAdmin()
+    .then(result=>{
+      result.length!=0 ? response.render('admin_dashboard.ejs') : console.log('Login failed..');
+    }).catch(err=>{
+      console.log(err);
     });
 } 
 exports.signinPage = (request,response,next)=>{

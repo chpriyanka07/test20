@@ -1,3 +1,10 @@
+const Category = require('../model/category.model');
 exports.addProductPage = (request,response,next)=>{
-    return response.render('add-product.ejs');
+    Category.getCategoryList()
+    .then(result=>{
+        console.log(result);
+        return response.render('add-product.ejs');
+    }).catch(err=>{
+        console.log(err);
+    });
 };
