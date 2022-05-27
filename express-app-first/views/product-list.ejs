@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <%- include('_bootstrap.ejs')%>
+</head>
+<body>
+    <%- include('_navigation.ejs')%>
+    <div class="container">
+        <table class="table">
+           <thead>
+              <tr>
+                  <th>S.no</th>
+                  <th>Category</th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+              </tr>
+           </thead>
+           <tbody>
+              <%
+                 for(let index in productList){
+                  %>
+                    <tr>
+                        <td><%=index*1+1%></td>
+                        <td><%=productList[index].categoryName%></td>
+                        <td><%=productList[index].productName%></td>
+                        <td><%=productList[index].productPrice%></td>
+                        <td>
+                           <a href="/product/edit-product/<%=productList[index].id%>"> 
+                            <button class="btn btn-primary">Edit</button>
+                           </a>
+                        </td>
+                        <td>
+                           <a onclick="return confirm('Are you sure ?')" href="/product/delete-product/<%=productList[index].id%>"> 
+                            <button class="btn btn-danger">Delete</button>
+                           </a>
+                        </td>
+                    </tr>
+                  <%
+                 }
+              %>
+           </tbody>
+        </table>
+    </div>
+</body>
+</html>

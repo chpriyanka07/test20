@@ -22,4 +22,51 @@ module.exports = class Product{
            });
         });
     }
+    static getProductList(){
+       return new Promise((resolve,reject)=>{
+          pool.getConnection((err,con)=>{
+             if(!err){
+               let sql = "select product.id,product.productName,product.productPrice,category.categoryName,product.categoryId from product inner join category on product.categoryId = category.id";
+               con.query(sql,(err,result)=>{
+                  con.release();
+                  err ? reject(err) : resolve(result);
+               })
+             }
+             else
+              reject(err);
+          });
+       });
+    }
+    static deleteProduct(productId){
+        return new Promise((resolve,reject)=>{
+           pool.getConnection((err,con)=>{
+              if(!err){
+                let sql = "delete from product where id = ?";
+                con.query(sql,[productId*1],(err,result)=>{
+                   con.release();
+                   err ? reject(err) : resolve(result);
+                });
+              }
+              else
+                reject(err);
+           })
+        });       
+    }
+    static getProductById(productId){
+       return new Promise((resolve,reject)=>{
+          pool.getConnection((err,con)=>{
+             if(!err){ 
+                let sql = "select * from product where id = ?";
+                con.query(sql,[productId*1],(err,result)=>{
+                   con.release();
+                   err ? reject(err) : resolve(result);
+                });
+             }
+             else
+               reject(err);
+          });
+       });
+    }
 }
+
+
