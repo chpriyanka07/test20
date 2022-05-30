@@ -1,6 +1,20 @@
 const Category = require('../model/category.model');
 const Product = require('../model/product.model');
+const { validationResult } = require('express-validator');
+exports.updateProduct = (request,response,next)=>{
+  let product = new Product();
+  product.id = request.body.id;
+  product.productName = request.body.bookName;
+  product.productPrice = request.body.price;
+  product.productDescription = request.body.productDescription
+  product.categoryId = request.body.categoryId;
+  Product.update(product).then(result=>{
+    return response.redirect("/product/product-list");
+  }).catch(err=>{
+    console.log(err);
+  });
 
+}
 exports.editProductPage = (request,response,next)=>{
     let productId = request.params.id;
     if(isNaN(productId))
@@ -8,9 +22,7 @@ exports.editProductPage = (request,response,next)=>{
     else{
       Promise.all([Category.getCategoryList(),Product.getProductById(productId)])
        .then(result=>{
-        console.log('Category...........'+result[0]);
-        console.timeLog('Product...............'+result[1]);
-        //return response.render('edit-product.ejs',{product: result[0]})
+         return response.render('edit-product.ejs',{categoryList: result[0],product: result[1][0]});
       }).catch(err=>{
         console.log(err);
         return response.send('Oops! something went wrong...');
@@ -55,7 +67,11 @@ exports.addProductPage = (request,response,next)=>{
     });
 };
 exports.saveProduct = (request,response,next)=>{
-    console.log(request.body);
+    let errors = validationResult(request);
+    if(!errors.isEmpty()){
+      console.log(errors.array()); 
+      return response.send("Bad Request..........");
+    }
     let product = new Product();
     product.productName = request.body.bookName;
     product.productPrice = request.body.price;

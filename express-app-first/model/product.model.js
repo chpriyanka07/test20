@@ -67,6 +67,21 @@ module.exports = class Product{
           });
        });
     }
+    static update(product){
+       return new Promise((resolve,reject)=>{
+          pool.getConnection((err,con)=>{
+             if(!err){
+               let sql = "update product set productName=?,productPrice=?,productDescription=?,categoryId=? where id=?";
+               con.query(sql,[product.productName,product.productPrice*1,product.productDescription,product.categoryId*1,product.id*1],(err,result)=>{
+                  con.release();
+                  err ? reject(err) : resolve(result);
+               });
+             }
+             else
+               reject(err);
+          });
+       });
+    }
 }
 
 
