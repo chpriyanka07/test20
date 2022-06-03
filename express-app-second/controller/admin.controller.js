@@ -2,14 +2,24 @@ const { validationResult } = require('express-validator');
 const Admin = require('../model/admin.model');
 const nodemailer = require('../util/nodeemail');
 
+exports.logout = (request,response,next)=>{
+   request.session.current_user = null;
+   request.session.destroy();
+   return response.redirect("/");
+}
+exports.dashboardPage = (request,response,next)=>{
+   return response.render("admin-dashboard.ejs",{currentUser: request.session.current_user});
+}
 exports.signin = (request,response,next)=>{
    const errors = validationResult(request);
    if(!errors.isEmpty())
-     return response.render("index.ejs",{message: 'Authenticaion failed'});
+     return response.render("index.ejs",{message: 'Authenticaion failed',currentUser: request.session.current_user});
    let admin = new Admin(null,request.body.email,request.body.password,null);
    admin.authenticateAdmin().then(result=>{
-      if(result.length!=0)
-        return response.send("Login Success....");
+      if(result.length!=0){
+        request.session.current_user = request.body.email;
+        return response.redirect("/admin/admin-dashboard");
+      }
       return response.send("Login Failed....");  
    }).catch(err=>{
       return response.send("Something went wrong.....");
@@ -20,18 +30,18 @@ exports.updatePassword = (request,response,next)=>{
    
    const errors = validationResult(request);
    if(!errors.isEmpty())
-     return response.render("new-password.ejs",{validationErrors: errors.array()});
+     return response.render("new-password.ejs",{validationErrors: errors.array(),currentUser: request.session.current_user});
    
    let admin = new Admin(null,request.body.email,request.body.password,null);
    admin.updatePassword().then(result=>{
       if(result.affectedRows!=0)
-        return response.render("index.ejs",{message: "Password updated successfully"});
+        return response.render("index.ejs",{message: "Password updated successfully",currentUser: request.session.current_user});
    }).catch(err=>{
       return response.send("Bad request....");
    }); 
 }
 exports.newPasswordPage = (request,response,next)=>{
-   return response.render('new-password.ejs',{validationErrors: []});
+   return response.render('new-password.ejs',{validationErrors: [],currentUser: request.session.current_user});
 }
 exports.forgetPassword = (request,response,next)=>{
    const errors = validationResult(request);
@@ -47,14 +57,14 @@ exports.forgetPassword = (request,response,next)=>{
           '<h3>Thanks and Regards</h3>'+
           '<h5>Team Book Inventory</h5>';
           await nodemailer.sendEmail(request.body.email,emailContent)
-          return response.render("index.ejs",{message: 'Check your email to create new password'});
+          return response.render("index.ejs",{message: 'Check your email to create new password',currentUser: request.session.current_user});
          }
          catch(err){
-            return response.render('index.ejs',{message: 'Something went wrong.'});
+            return response.render('index.ejs',{message: 'Something went wrong.',currentUser: request.session.current_user});
          }
        }
        else
-        return response.render("index.ejs",{message: 'Invalid email id'});
+        return response.render("index.ejs",{message: 'Invalid email id',currentUser: request.session.current_user});
    }).catch(err=>{
        console.log(err);
    });
@@ -64,7 +74,7 @@ exports.verifyAccount = (request,response,next)=>{
    if(request.query.email){
       Admin.verifyAccount(request.query.email).then(result=>{
          if(result.affectedRows!=0)
-           return response.render('index.ejs',{message: 'you are verified. please signin'});
+           return response.render('index.ejs',{message: 'you are verified. please signin',currentUser: request.session.current_user});
       }).catch(err=>{
          return response.send("Bad Request....");
       });
@@ -73,7 +83,7 @@ exports.verifyAccount = (request,response,next)=>{
 exports.signup = (request,response)=>{
    const errors = validationResult(request);
    if(!errors.isEmpty())
-    return response.render('signup.ejs',{validationErrors: errors.array()});
+    return response.render('signup.ejs',{validationErrors: errors.array(),currentUser: request.session.current_user});
   
    let admin = new Admin();
    admin.email = request.body.email;
@@ -86,7 +96,7 @@ exports.signup = (request,response)=>{
         '<h3>Thanks and Regards</h3>'+
         '<h5>Team Book Inventory</h5>'; 
         await nodemailer.sendEmail(admin.email,emailContent);
-        return response.render("index.ejs",{message: 'Please verify your account'});
+        return response.render("index.ejs",{message: 'Please verify your account',currentUser: request.session.current_user});
       }
       catch(err){
          console.log(err);

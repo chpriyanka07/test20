@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../controller/admin.controller');
 const { body } = require('express-validator');
+const authenticate = require('../middleware/user-authentication');
 router.post("/signup",
 body('email','Invalid email id').isEmail(),
 body('password','Invalid password').notEmpty(),
@@ -24,5 +25,9 @@ router.post("/signin",
 body("email","Invalid email id").isEmail(),
 body("password","Invalid password").notEmpty()
 ,adminController.signin);
+
+router.get("/admin-dashboard",authenticate.isAuthenticate,adminController.dashboardPage);
+
+router.get("/logout",adminController.logout);
 
 module.exports = router;
