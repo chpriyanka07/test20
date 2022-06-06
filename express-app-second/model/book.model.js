@@ -8,6 +8,20 @@ module.exports = class Book{
         this.bookImage = bookImage;
         this.bookDescription = bookDescription;
     }
+    static getBookList(){
+        return new Promise((resolve,reject)=>{
+            pool.getConnection((err,con)=>{
+                if(!err){
+                   let sql = "select * from book";
+                   con.query(sql,(err,result)=>{
+                       con.release();
+                       err ? reject(err) : resolve(result);
+                   });
+                }
+                else reject(err);
+            });
+        });
+    }
     save(){
         return new Promise((resolve,reject)=>{
             pool.getConnection((err,con)=>{

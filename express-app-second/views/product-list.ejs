@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <%- include('_bootstrap.ejs')%>
+</head>
+<body>
+<%- include('_navigation.ejs')%> 
+<br>
+<div class="container">
+  <table class="table">
+      <thead>
+          <tr>
+              <td>S.no</td>
+              <td>Image</td>
+              <td>Name</td>
+              <td>Price</td>
+              <td>Edit</td>
+              <td>Delete</td>
+          </tr>
+      </thead>
+      <tbody>
+          <%let i=1;%>
+          <%for(let product of productList){%>
+            <tr>
+               <td><%=i++%></td>
+               <td><img style="width:100px; height:100px; border-radius: 50%;" src="/images/<%=product.bookImage%>"></td> 
+               <td><%=product.bookName%></td>
+               <td><button class="btn btn-primary">Edit</button></td>
+               <td><button class="btn btn-danger">Delete</button></td>
+            </tr>
+          <%}%>  
+      </tbody>
+  </table>
+</div>
+
+</body>
+</html>

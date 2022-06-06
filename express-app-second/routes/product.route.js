@@ -16,4 +16,5 @@ router.route("/add-product")
  body('bookPrice').notEmpty(),
  productController.saveProduct);
 
+router.get("/product-list",authenticate.isAuthenticate,productController.productList); 
 module.exports = router;

@@ -6,8 +6,11 @@ const categoryRouter = require('./routes/category.route');
 const productRouter = require('./routes/product.route');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-app.set("view engine","ejs");
+const path = require('path');
 
+app.set("view engine","ejs");
+let staticPath = path.join(__dirname,'public');
+app.use(express.static(staticPath));
 app.use(bodyParser.json()); // json encoded data
 app.use(bodyParser.urlencoded({extended: true})); // form url-encoded
 app.use(session({secret: 'fdvxvdflkrereovccv'}));

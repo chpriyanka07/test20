@@ -1,11 +1,17 @@
-const { response } = require('express');
+const { validationResult } = require('express-validator');
 const Category = require('../model/categroy.model');
 const Book = require('../model/book.model');
-exports.saveProduct = (request,response,next)=>{
-    console.log(request.file);
-    console.log("--------------------");
-    console.log(request.body);
 
+exports.productList = (request,response,next)=>{
+    Book.getBookList().then(result=>{
+        return response.render("product-list.ejs",{currentUser: request.session.current_user,productList: result});
+    }).catch();
+}
+exports.saveProduct = (request,response,next)=>{
+     
+    const errors = validationResult(request);
+    if(!errors.isEmpty())
+      return response.send("Bad request....");
     let book = new Book();
     
     if(request.file)
@@ -18,7 +24,7 @@ exports.saveProduct = (request,response,next)=>{
     book.categoryId = request.body.categoryId*1;
     
     book.save().then(result=>{
-        return response.send("Book Saved...");
+        return response.redirect("/product/add-product");
     }).catch(err=>{
         console.log(err);
         return response.send("Book Not Saved...");
