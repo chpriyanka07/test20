@@ -6,6 +6,20 @@ module.exports = class Admin{
         this.password = password;
         this.status = status;
     }
+    signin(){
+        return new Promise((resolve,reject)=>{
+            pool.getConnection((err,con)=>{
+               if(!err){
+                 let sql = "select * from admin where email=? and password = ?";
+                 con.query(sql,[this.email,this.password],(err,result)=>{
+                     con.release();
+                     err ? reject(err) : resolve(result);
+                 })
+               }
+               else reject(err);
+            });
+        });
+    }
     getAdmin(){
         return new Promise((resolve,reject)=>{
             pool.getConnection((err,con)=>{
