@@ -1,0 +1,189 @@
+1. show dbs
+
+2. How to create database
+   use database_name
+   use employeedb
+3. How to create collection in mongodb
+   db.createCollection('employee')
+   
+4. document example ----
+    {
+      name : 'Rahil',
+      salary: 45000,
+      age: 21,
+      skill: 'java'
+   }      
+   
+5. 
+  db.employee.insert({});
+  db.employee.insertMany();
+  db.employee.insert([{
+      name : 'Sahil',
+      salary: 55000,
+      age: 28,
+      skill: 'android'
+   },
+   {
+      name : 'Cheeku',
+      salary: 89000,
+      age: 26,
+      skill: 'java'
+   },
+   {
+      _id: 1
+      name : 'Peeku',
+      salary: 90000,
+      age: 30,
+      skill: 'angular'
+   }
+ ]);   
+6. How to fetch data from collection
+   db.employee.find();   
+   
+   db.employee.insert([
+     {
+       name: 'Sontu',
+       salary : 70000,
+       age: 24,
+       skill: 'c'
+     },
+     {
+       name: 'Montu',
+       salary : 80000,
+       age: 26,
+       skill: 'cpp'
+     },
+     {
+       name: 'Atul',
+       salary : 90000,
+       age: 27,
+       skill: 'java'
+     },
+     {
+       name: 'Ankita',
+       salary : 89000,
+       age: 26,
+       skill: 'cpp'
+     },
+     {
+       name: 'Nikita',
+       salary : 120000,
+       age: 29,
+       skill: 'java'
+     }
+   ])
+
+ // select * from employee where skill ='java'
+ db.employee.find({skill:'java'})
+ 
+ // select * from employee where age >=25
+ $gt,$lt,$gte,$lte,$ne
+ db.employee.find({
+   age: {$gte: 25}
+ });  
+ 
+ // select * from employee where skill='java' and age>=25
+ 
+ db.employee.find({skill:'java',age:{$gte:25}})
+ db.employee.find({
+   $and:[{skill:'java'},{age:{$gte:25}}]
+ })
+ 
+ // select * from employee where skill='java'
+    or salary>=50000
+   
+ db.employee.find({
+   $or:[{skill:'java'},{salary:{$gte:50000}}]
+ })  
+ 
+ db.employee.find({
+   $and:[{skill:'java'},{
+    $or:[{salary:{$gte:60000}},{age:{$gte:25}}]
+   }]
+ }).pretty()
+ 
+ db.employee.find({},{_id:0}).pretty()
+--------------------------------------------
+Collection :-
+   capped collection :-
+     In capped collection number of
+     document are limited :-
+     
+     db.createCollection('test',{
+       capped: true, size: 10, max:3
+     });
+     document--1
+     document--2
+     document--3
+     -------------------------
+     docuement-2
+     document-3
+     document-4
+     
+   uncapped collection :-
+     In uncapped collection number of
+     documents are not limited.
+
+    db.createCollection('test',{capped: true,size:1000,max:3})
+    
+    db.test.insert([{
+      name:'abc'
+    },{name:'pqr'}])
+
+    db.test.find().forEach(data=>{
+      db.test2.insert(data)
+    })
+ .......................................
+ db.employee.find().pretty();
+ db.employee.find({},{_id:0,salary:0}).pretty()
+ db.employee.find({},{name:1,skill:1,_id:0}).pretty()
+ ----------------------------------------
+ sort()
+ db.employee.find().sort({age:1}) -->asc
+ db.employee.find().sort({age:-1})-->desc
+ 
+ db.employee.find().sort({age:-1}).limit(5).pretty() 
+ -----------------------------------------
+ select max(salary) from employee
+ 
+ db.employee.find().sort({salary:-1})[0].salary
+ 120000
+ 
+ db.employee.find({
+   salary: db.employee.find().sort({salary:-1})[0].salary
+ })
+ 
+ // Getting second highest salary value
+ db.employee.find({
+   salary: {
+     $ne: db.employee.find().sort({salary:-1})[0].salary
+   }
+ }).sort({salary:-1})[0].salary
+ 
+ // Getting documents who have second highest salary
+ db.employee.find({
+   salary: db.employee.find({
+            salary: {
+               $ne: db.employee.find().sort({salary:-1})[0].salary
+             }
+    }).sort({salary:-1})[0].salary
+ }).pretty()
+ 
+ // updating record
+ db.employee.update({
+   skill: 'java'
+ },{
+   $set:{salary:200000}
+ },{multi:true})
+ 
+ db.employee.updateMany({
+   skill: 'java'
+ },{
+   $set:{salary:300000}
+ })
+ 
+ db.employee.update({
+   _id:ObjectId("62a019f0bb06f608007a48f3")
+ },{
+ $set:{age:30,salary:10000}
+  })
